@@ -13,7 +13,7 @@ namespace LX.LX_Activator.Items
 
 		public override void Use()
 		{
-			if (ObjectManager.Player.IsPotionReady())
+			if (ObjectManager.Player.IsPotionUseReady())
 			{
 				if (Activator.Menu_Potions.PotionConditionMatch(className) &&
 					EloBuddy.SDK.Item.HasItem(ItemId.Refillable_Potion) &&

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Menu;
@@ -62,7 +63,7 @@ namespace LX.LX_Activator
 			return false;
 		}
 
-		public static bool IsPotionReady(this AIHeroClient hero)
+		public static bool IsPotionUseReady(this AIHeroClient hero)
 		{
 			return !(ObjectManager.Player.IsDead ||
 					 ObjectManager.Player.IsInShopRange() ||
@@ -83,9 +84,24 @@ namespace LX.LX_Activator
 			return false;
 		}
 
+		public static Vector3 ModifyPrediction(this PredictionResult prediction, int modificator)
+		{
+			var distance = prediction.UnitPosition.Distance(prediction.CastPosition);
+			var newpos = prediction.CastPosition.FromVtoV(prediction.UnitPosition, distance * modificator / 100);
+			return newpos;
+		}
+
+		public static IEnumerable<Obj_AI_Base> CollisionObjects(this Vector3 position,int width)
+		{
+			return (from obj in ObjectManager.Get<Obj_AI_Base>() 
+					let rec = new Geometry.Polygon.Rectangle(ObjectManager.Player.Position.To2D(), position.To2D(), width + obj.BoundingRadius) 
+					where rec.IsInside(obj) 
+					select obj).ToList();
+		}
+
 		public static Vector3 FromVtoV(this Vector3 from, Vector3 to, float range)
 		{
-			return from + range*Vector3.Normalize(to - from);
+			return from + Vector3.Normalize(to - from) * range;
 		}
 		public static List<string> NoManaChamp = new List<string>
 		{
@@ -96,5 +112,19 @@ namespace LX.LX_Activator
 			"Zac",
 			"Zed"
 		};
+
+		public static bool IsStunnedHotFix(this Obj_AI_Base unit)
+		{
+			if (unit.HasBuff("DarkBindingMissile")) // Morgana Q
+				return true;
+			if (unit.HasBuff("zyragraspingrootshold")) // Zyra E
+				return true;
+			if (unit.HasBuff("sorakaesnare")) // Soraka E
+				return true;
+			return false;
+		}
+
+		// Some Buffy i may need later
+		// kagesluckypickdisplay stack 3 ( frostfang get money for dmg )
 	}
 }

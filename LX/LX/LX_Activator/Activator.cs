@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EloBuddy;
+using EloBuddy.SDK;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 using LX.LX_Activator.Items;
@@ -51,6 +52,7 @@ namespace LX.LX_Activator
 
 			SpellList = new List<Spell_Passive>
 			{
+				new Morgana_Q(),
 				new Morgana_W(),
 			};
 
@@ -67,6 +69,13 @@ namespace LX.LX_Activator
 
 		private static void OnUpdate(EventArgs args)
 		{
+			if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LastHit))
+			{
+				foreach (var buff in ObjectManager.Player.Buffs)
+				{
+					Console.WriteLine(buff.Name + " Count: " + buff.Count);
+				}
+			}
 			foreach (var summoner in SummonerList.Where(o => o.active()))
 				summoner.Use(); 
 			foreach (var item in ItemList)
