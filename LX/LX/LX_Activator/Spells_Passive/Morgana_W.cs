@@ -90,14 +90,14 @@ namespace LX.LX_Activator.Spells_Passive
 		private static Vector3 GetBestCastPosition(Obj_AI_Base target)
 		{
 			Vector3 pos;
-			var spellmissingRange = target.Distance(ObjectManager.Player) - Spell.Range + Spell.Radius * 2;
+			var spellmissingRange = target.Distance(ObjectManager.Player) - Spell.Range + Spell.Radius * 2 - target.BoundingRadius;
 			if (spellmissingRange > 0)
 			{
 				pos = target.Position.FromVtoV(ObjectManager.Player.Position, spellmissingRange -Spell.Width);
 				return pos;
 			}
 			var unitsArround = EntityManager.Heroes.Enemies.Where(u => u != target &&
-				u.IsInRange(target, Spell.Width * 2) && u.IsValidTarget());
+				u.IsInRange(target, Spell.Width * 2 - target.BoundingRadius) && u.IsValidTarget());
 			AIHeroClient bestSecondTarget = null;
 			foreach (var unit in unitsArround)
 			{
@@ -109,7 +109,7 @@ namespace LX.LX_Activator.Spells_Passive
 			if (bestSecondTarget != null)
 			{
 				var bestpos = target.Position.FromVtoV(bestSecondTarget.Position, target.Distance(bestSecondTarget) / 2 - new Random().Next(1, 25));
-				if (bestpos.Distance(ObjectManager.Player.Position) <= Spell.Range)
+				if (bestpos.Distance(ObjectManager.Player.Position - target.BoundingRadius) <= Spell.Range)
 					return bestpos;
 			}
 			else

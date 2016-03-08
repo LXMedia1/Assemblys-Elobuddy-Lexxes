@@ -94,8 +94,9 @@ namespace LX.LX_Activator
 		public static IEnumerable<Obj_AI_Base> CollisionObjects(this Vector3 position,int width)
 		{
 			return (from obj in ObjectManager.Get<Obj_AI_Base>() 
-					let rec = new Geometry.Polygon.Rectangle(ObjectManager.Player.Position.To2D(), position.To2D(), width + obj.BoundingRadius) 
-					where rec.IsInside(obj) 
+					let rec = new Geometry.Polygon.Rectangle(ObjectManager.Player.Position.To2D(), position.To2D(), width + obj.BoundingRadius *2)
+					
+					where (rec.IsInside(obj) || rec.IsInside(Prediction.Position.PredictUnitPosition(obj,250))) && obj != ObjectManager.Player 
 					select obj).ToList();
 		}
 

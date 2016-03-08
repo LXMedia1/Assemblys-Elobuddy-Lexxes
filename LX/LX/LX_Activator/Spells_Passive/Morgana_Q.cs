@@ -34,63 +34,52 @@ namespace LX.LX_Activator.Spells_Passive
 			Menu.AddSeparator();
 			Menu.AddGroupLabel("Using:");
 
-			Menu.Add("active_combo", new CheckBox("Active in Combo Mode"));			
-			var slider = Menu.Add("targetingMode_combo", new Slider("", 0, 0, 3));
-			Menu["targetingMode_combo"].Cast<Slider>().DisplayName = "Targeting Modus: " + GetTargetModeName(Menu["targetingMode_combo"].Cast<Slider>().CurrentValue);
-			slider.OnValueChange += OnValueChamgedCombo;
-
+			Menu.AddLabel("The Elobuddy Prediction is not so good right now, if i find a Solution ill add a own.");
+			Menu.Add("active_combo", new CheckBox("Active in Combo Mode"));
+			var slider = Menu.Add("active_combo_hitpercent", new Slider("",70));
+			Menu["active_combo_hitpercent"].Cast<Slider>().DisplayName = "Combo Hitchance : " + Menu["active_combo_hitpercent"].Cast<Slider>().CurrentValue + " %";
+			slider.OnValueChange += OnSliderComboHitpercent;
 			Menu.Add("active_harras", new CheckBox("Active in Harras Mode"));
-			slider = Menu.Add("targetingMode_harras", new Slider("", 0, 0, 3));
-			Menu["targetingMode_harras"].Cast<Slider>().DisplayName = "Targeting Modus: " + GetTargetModeName(Menu["targetingMode_harras"].Cast<Slider>().CurrentValue);
-			slider.OnValueChange += OnValueChamgedHarras;
-			
+			slider = Menu.Add("active_harras_hitpercent", new Slider("",90));
+			Menu["active_harras_hitpercent"].Cast<Slider>().DisplayName = "Harras Hitchance : " + Menu["active_harras_hitpercent"].Cast<Slider>().CurrentValue + " %";
+			slider.OnValueChange += OnSliderHarrasHitpercent;
+
+			Menu.AddLabel("Modified Prediction: Its Simple, it takes the Ememy Position and the Predicted");
+			Menu.AddLabel("Position From Elobuddy Prediction, Calculate the Selected Percent Amoount Back to");
+			Menu.AddLabel("his Current Position and Checks there for Collision´s.");
+			Menu.AddLabel("If active he not use the HitchancePercent Above!");
+			Menu.Add("use_Modified_Prodiction", new CheckBox("Use Modified Prediction"));
+			slider = Menu.Add("modifie_prediction_by", new Slider("",20));
+			Menu["modifie_prediction_by"].Cast<Slider>().DisplayName = "Modifie Position to Current Position by " + Menu["modifie_prediction_by"].Cast<Slider>().CurrentValue + " %";
+			slider.OnValueChange += OnSliderModifiepercent;
+
 			Menu.AddGroupLabel("Drawing:");
 			Menu.Add("drawing_range", new CheckBox("Draw SpellRange"));
-			
+
 			
 			Drawing.OnDraw += OnDraw;			
 
 		}
 
-		private void OnValueChamgedHarras(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
+		private void OnSliderModifiepercent(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
 		{
-			Menu["targetingMode_harras"].Cast<Slider>().DisplayName = "Targeting Modus: " + GetTargetModeName(args.NewValue);
+			Menu["modifie_prediction_by"].Cast<Slider>().DisplayName = "Modifie Position to Current Position by " + Menu["modifie_prediction_by"].Cast<Slider>().CurrentValue + " %";
 		}
 
-		private void OnValueChamgedCombo(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
+		private void OnSliderHarrasHitpercent(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
 		{
-			Menu["targetingMode_combo"].Cast<Slider>().DisplayName = "Targeting Modus: " + GetTargetModeName(args.NewValue);
+			Menu["active_harras_hitpercent"].Cast<Slider>().DisplayName = "Harras Hitchance : " + Menu["active_harras_hitpercent"].Cast<Slider>().CurrentValue + " %";
 		}
 
-		private static string GetTargetModeName(int id)
+		private void OnSliderComboHitpercent(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
 		{
-			switch (id)
-			{
-				case 0:
-					return "Target Selector ( lesser casting but better focus )";
-				case 1:
-					return "Easy Killable ( Focus the easyst Killable Target )";
-				case 2:
-					return "Most Dangerous ( Focus on Feedlvl )";
-				case 3:
-					return "Any ( Will Focus what can get Hit Easy )";
-			}
-			return "Error";
+			Menu["active_combo_hitpercent"].Cast<Slider>().DisplayName = "Combo Hitchance : " + Menu["active_combo_hitpercent"].Cast<Slider>().CurrentValue + " %";
 		}
 
 		private static void OnDraw(EventArgs args)
 		{
 			if (Menu["drawing_range"].Cast<CheckBox>().CurrentValue && Spell.IsLearned)
 				Circle.Draw(Spell.IsReady() ? SharpDX.Color.Green : SharpDX.Color.Red, Spell.Range, ObjectManager.Player);
-
-			var target = TargetSelector.GetTarget(Spell.Range, DamageType.Magical);
-			if (target == null)
-				return;
-			var pred = Spell.GetPrediction(target);
-			var rec = new Geometry.Polygon.Rectangle(ObjectManager.Player.Position.To2D(),
-				pred.CastPosition.To2D(), Spell.Width);
-			Drawing.DrawText(pred.CastPosition.WorldToScreen(),Color.White,pred.HitChance.ToString( ),2);
-			rec.Draw((pred.Collision) ? Color.Red : Color.Green);
 		}
 
 		public override void Use()
@@ -98,93 +87,52 @@ namespace LX.LX_Activator.Spells_Passive
 			if (Spell.IsReady() && Menu["active_combo"].Cast<CheckBox>().CurrentValue &&
 			    Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
 			{
-				switch (Menu["targetingMode_harras"].Cast<Slider>().CurrentValue)
+				var target = TargetSelector.GetTarget(Spell.Range, DamageType.Magical);
+				if (target == null)
+					return;
+				var pred = Spell.GetPrediction(target);
+				if (Menu["use_Modified_Prodiction"].Cast<CheckBox>().CurrentValue)
 				{
-					case 0:
-						Mode_TargetSelector();
-						break;
-					case 1:
-						Mode_EasyKillable();
-						break;
-					case 2:
-						Mode_MostDangerous();
-						break;
-					case 3:
-						Mode_Any();
-						break;
+					var modifiedPosition = Spell.GetPrediction(target).ModifyPrediction(Menu["modifie_prediction_by"].Cast<Slider>().CurrentValue);
+					if (modifiedPosition.CollisionObjects(Spell.Radius + 5).All(u => u.Team == ObjectManager.Player.Team || u.NetworkId == target.NetworkId))
+					{
+						Spell.Cast(modifiedPosition);
+					}
+				}
+				else
+				{
+					if (pred.HitChancePercent >= Menu["active_combo_hitpercent"].Cast<Slider>().CurrentValue && pred.Collision)
+						Spell.Cast(pred.CastPosition);
+				}
+			}
+			if (Spell.IsReady() && Menu["active_harras"].Cast<CheckBox>().CurrentValue &&
+			    Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass))
+			{
+				var target = TargetSelector.GetTarget(Spell.Range, DamageType.Magical);
+				if (target == null)
+					return;
+				var pred = Spell.GetPrediction(target);
+				if (Menu["use_Modified_Prodiction"].Cast<CheckBox>().CurrentValue)
+				{
+					var modifiedPosition = Spell.GetPrediction(target).ModifyPrediction(Menu["modifie_prediction_by"].Cast<Slider>().CurrentValue);
+					if (modifiedPosition.CollisionObjects(Spell.Radius + 5).All(u => u.Team == ObjectManager.Player.Team || u.NetworkId == target.NetworkId))
+					{
+						Spell.Cast(modifiedPosition);
+					}
+				}
+				else
+				{
+					if (pred.HitChancePercent >= Menu["active_harras_hitpercent"].Cast<Slider>().CurrentValue && pred.Collision)
+						Spell.Cast(pred.CastPosition);
 				}
 			}
 		}
 
 		private void Mode_TargetSelector()
 		{
-			var target = TargetSelector.GetTarget(Spell.Range, DamageType.Magical);
-			if (target == null)
-				return;
-			var pred = Spell.GetPrediction(target);
-			var mod = pred.ModifyPrediction(10);
-			if ( pred.HitChance >= HitChance.High )
-				Spell.Cast(pred.CastPosition);
-
-
-		}
-
-		private void Mode_EasyKillable()
-		{
 			
-		}
 
-		private void Mode_MostDangerous()
-		{
-			
-		}
 
-		private void Mode_Any()
-		{
-			
-		}
-
-		private static Vector3 GetBestCastPosition(Obj_AI_Base target)
-		{
-			Vector3 pos;
-			var spellmissingRange = target.Distance(ObjectManager.Player) - Spell.Range + Spell.Radius * 2;
-			if (spellmissingRange > 0)
-			{
-				pos = target.Position.FromVtoV(ObjectManager.Player.Position, spellmissingRange -Spell.Width);
-				return pos;
-			}
-			var unitsArround = EntityManager.Heroes.Enemies.Where(u => u != target &&
-				u.IsInRange(target, Spell.Width * 2) && u.IsValidTarget());
-			AIHeroClient bestSecondTarget = null;
-			foreach (var unit in unitsArround)
-			{
-				if (bestSecondTarget == null)
-					bestSecondTarget = unit;
-				if (bestSecondTarget.BaseAbilityDamage + bestSecondTarget.BaseAttackDamage < unit.BaseAbilityDamage + unit.BaseAttackDamage)
-					bestSecondTarget = unit;
-			}
-			if (bestSecondTarget != null)
-			{
-				var bestpos = target.Position.FromVtoV(bestSecondTarget.Position, target.Distance(bestSecondTarget) / 2 - new Random().Next(1, 25));
-				if (bestpos.Distance(ObjectManager.Player.Position) <= Spell.Range)
-					return bestpos;
-			}
-			else
-			{
-				if (target.HealthPercent <= 20)
-				{
-					pos = target.Position.FromVtoV(ObjectManager.Player.Position, -Spell.Width + new Random().Next(1, 25));
-					return pos;
-				}
-				if (target.HealthPercent >= 80)
-				{
-					pos = target.Position.FromVtoV(ObjectManager.Player.Position, Spell.Width - new Random().Next(1, 25));
-					return pos;
-				}
-				pos = target.Position.FromVtoV(ObjectManager.Player.Position, new Random().Next(1, 100) - 50);
-				return pos;
-			}
-			return Vector3.Zero;
 		}
 	}
 }

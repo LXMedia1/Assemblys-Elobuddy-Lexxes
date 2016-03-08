@@ -111,6 +111,11 @@
     <Compile Include="LX_Activator\Misc.cs" />
     <Compile Include="LX_Activator\Summoners\Exhoust.cs" />
     <Compile Include="LX_Activator\Summoners\Ignite.cs" />
+    <Compile Include="LX_Evade\Collision.cs" />
+    <Compile Include="LX_Evade\EarlyEvade.cs" />
+    <Compile Include="LX_Evade\Evade.cs" />
+    <Compile Include="LX_Evade\SpellData.cs" />
+    <Compile Include="LX_Evade\SpellDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
