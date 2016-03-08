@@ -40,6 +40,7 @@ namespace LX.LX_Activator
 			{
 				new Exhoust(),
 				new Ignite(),
+				new Smite(),
 			};
 
 			ItemList = new List<Item>

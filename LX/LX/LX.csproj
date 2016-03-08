@@ -111,6 +111,7 @@
     <Compile Include="LX_Activator\Items\Total_Biscuit_of_Rejuvenation.cs" />
     <Compile Include="LX_Activator\Misc.cs" />
     <Compile Include="LX_Activator\Summoners\Exhoust.cs" />
+    <Compile Include="LX_Activator\Summoners\Smite.cs" />
     <Compile Include="LX_Activator\Summoners\Ignite.cs" />
     <Compile Include="LX_Evade\Collision.cs" />
     <Compile Include="LX_Evade\EarlyEvade.cs" />
