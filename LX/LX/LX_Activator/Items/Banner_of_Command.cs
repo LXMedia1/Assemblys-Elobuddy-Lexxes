@@ -20,25 +20,25 @@ namespace LX.LX_Activator.Items
 		public override void Use()
 		{
 			if (Activator.Menu_Items_Situation["useInCombo"].Cast<CheckBox>().CurrentValue &&
-			    Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) &&
+				Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) &&
 				EloBuddy.SDK.Item.HasItem(ItemId.Banner_of_Command) &&
 				EloBuddy.SDK.Item.CanUseItem(ItemId.Banner_of_Command))
 			{
-				var Minions = ObjectManager.Get<Obj_AI_Minion>().Where(u => !u.IsDead && u.IsValidTarget(1100));
-				foreach (var minion in Minions)
-				{
-					Console.WriteLine(minion.Name);
-					Console.WriteLine(minion.AttackRange);
-					Console.WriteLine(minion.BaseSkinName);
-					Console.WriteLine(minion.Type);
-					Console.WriteLine(minion.Health);
-					Console.WriteLine(minion.MinionLevel);
-				}
+				var SiegeMinion = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(u => !u.IsDead && u.IsValidTarget(1100) && u.BaseSkinName.Contains("MinionSiege") && u.Team == ObjectManager.Player.Team);
+				if (SiegeMinion != null)
+					EloBuddy.SDK.Item.UseItem(ItemId.Banner_of_Command, SiegeMinion);
 			}
-			
+			if (Activator.Menu_Items_Situation["useInHarras"].Cast<CheckBox>().CurrentValue &&
+				Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass) &&
+				EloBuddy.SDK.Item.HasItem(ItemId.Banner_of_Command) &&
+				EloBuddy.SDK.Item.CanUseItem(ItemId.Banner_of_Command))
+			{
+				var SiegeMinion = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(u => !u.IsDead && u.IsValidTarget(1100) && u.BaseSkinName.Contains("MinionSiege") && u.Team == ObjectManager.Player.Team);
+				if (SiegeMinion != null)
+					EloBuddy.SDK.Item.UseItem(ItemId.Banner_of_Command, SiegeMinion);
+			}
 
-					//EloBuddy.SDK.Item.UseItem(ItemId.Health_Potion);
-			
+					
 		}
 	}
 }
