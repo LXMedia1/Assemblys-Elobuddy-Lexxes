@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="LX.cs" />
     <Compile Include="LX_Activator\Activator.cs" />
+    <Compile Include="LX_Activator\Items\Banner_of_Command.cs" />
     <Compile Include="LX_Activator\Spells_Passive\Morgana_Q.cs" />
     <Compile Include="LX_Activator\Spells_Passive\Morgana_W.cs" />
     <Compile Include="LX_Activator\Spell_Passive.cs" />

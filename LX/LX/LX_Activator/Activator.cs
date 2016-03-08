@@ -18,6 +18,7 @@ namespace LX.LX_Activator
 		public static Menu Menu;
 		public static Menu Menu_Potions;
 		public static Menu Menu_Summoners;
+		public static Menu Menu_Items_Situation;
 
 		public static List<Item> ItemList;
 		public static List<Summoner> SummonerList;
@@ -32,22 +33,24 @@ namespace LX.LX_Activator
 			Menu_Potions.Add("disable_Mana", new CheckBox("Disable Mana"));
 
 			Menu_Summoners = Menu.AddSubMenu("Summoner Manager", "lx_summonermanager", "LX - Ultimate SummonerManager");
-			//Menu_Potions.AddLabel("Hint: Some Summoners are just Supported for Specific Champions (Flash -> Gallio");
 
+			Menu_Items_Situation = Menu.AddSubMenu("Items Situational", "lx_items_situations", "LX - Ultimate Items - Situational");
 			
 			SummonerList = new List<Summoner>
 			{
+				new Exhoust(),
 				new Ignite(),
-				new Exhoust()
 			};
 
 			ItemList = new List<Item>
 			{
-				new Health_Potion(),
-				new Total_Biscuit_of_Rejuvenation(),
+				new Banner_of_Command(),
 				new Corrupting_Potion(),
+				new Health_Potion(),
 				new Hunters_Potion(),
-				new Refillable_Potion()
+				new Refillable_Potion(),
+				new Total_Biscuit_of_Rejuvenation(),
+
 			};
 
 			SpellList = new List<Spell_Passive>
@@ -80,7 +83,7 @@ namespace LX.LX_Activator
 				summoner.Use(); 
 			foreach (var item in ItemList)
 				item.Use();
-			foreach (var spell in SpellList)
+			foreach (var spell in SpellList.Where(o => o.active()))
 				spell.Use();
 		}
 	}
