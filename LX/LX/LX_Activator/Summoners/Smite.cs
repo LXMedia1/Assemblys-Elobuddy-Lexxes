@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -36,8 +38,9 @@ namespace LX.LX_Activator.Summoners
 			Activator.Menu_Summoners.AddLabel("Basic Monster Smiting");
 			foreach (var monster in MonsterList.Where(m => m.IsOnMap()))
 				monster.AddCheckbox();
-			
 		}
+
+		
 
 		public override bool active()
 		{
@@ -47,9 +50,7 @@ namespace LX.LX_Activator.Summoners
 		{
 			UpdateSmite();
 			foreach (var monster in MonsterList.Where(m => m.IsActive()))
-			{
 				monster.SmiteIt();
-			}
 		}
 
 		private void UpdateSmite()

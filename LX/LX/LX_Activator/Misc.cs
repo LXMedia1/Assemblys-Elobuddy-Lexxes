@@ -108,8 +108,12 @@ namespace LX.LX_Activator
 		{
 			"Aatrox",
 			"Akali",
-			"Garen","Gnar","Katarina","RekSai","Renektion","Rengar","Riven","Rumble","Shyvana","Tryndamere","Yasuo"
-			,"DrMundo","Mordekaiser","Vladimir","LeeSin","Shen","Kennen",
+			"DrMundo",
+			"Garen",
+			"Kennen",
+			"Mordekaiser",
+			"Gnar","Katarina","RekSai","Renektion","Rengar","Riven","Rumble","Shyvana","Tryndamere","Yasuo",
+			"Vladimir","LeeSin","Shen",
 			"Zac",
 			"Zed"
 		};

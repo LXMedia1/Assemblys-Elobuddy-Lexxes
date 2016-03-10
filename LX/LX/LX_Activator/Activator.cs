@@ -58,6 +58,7 @@ namespace LX.LX_Activator
 			{
 				new Morgana_Q(),
 				new Morgana_W(),
+				new Morgana_E(),
 			};
 
 			foreach (var item in ItemList)

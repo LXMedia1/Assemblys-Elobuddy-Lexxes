@@ -100,6 +100,7 @@
     <Compile Include="LX_Activator\Activator.cs" />
     <Compile Include="LX_Activator\Items\Banner_of_Command.cs" />
     <Compile Include="LX_Activator\Spells_Passive\Morgana_Q.cs" />
+    <Compile Include="LX_Activator\Spells_Passive\Morgana_E.cs" />
     <Compile Include="LX_Activator\Spells_Passive\Morgana_W.cs" />
     <Compile Include="LX_Activator\Spell_Passive.cs" />
     <Compile Include="LX_Activator\Summoner.cs" />
@@ -113,11 +114,11 @@
     <Compile Include="LX_Activator\Summoners\Exhoust.cs" />
     <Compile Include="LX_Activator\Summoners\Smite.cs" />
     <Compile Include="LX_Activator\Summoners\Ignite.cs" />
-    <Compile Include="LX_Evade\Collision.cs" />
-    <Compile Include="LX_Evade\EarlyEvade.cs" />
-    <Compile Include="LX_Evade\Evade.cs" />
-    <Compile Include="LX_Evade\SpellData.cs" />
+    <Compile Include="LX_Evade\Drawer.cs" />
+    <Compile Include="LX_Evade\EvadePositions.cs" />
+    <Compile Include="LX_Evade\Spell.cs" />
     <Compile Include="LX_Evade\SpellDB.cs" />
+    <Compile Include="LX_Evade\SpellDedector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
