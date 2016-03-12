@@ -28,6 +28,7 @@ namespace LX.LX_Evade
 			KnockUp,
 			Stun,
 			Taunt,
+			KnockSideway,
 		}
 		public enum EffectLevel
 		{
@@ -46,6 +47,7 @@ namespace LX.LX_Evade
 			YasuoWall,
 			Wall,
 			BasicCollision_allow1,
+			BasicChampionCollision,
 		}
 
 

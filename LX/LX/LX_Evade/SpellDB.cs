@@ -61,7 +61,7 @@ namespace LX.LX_Evade
 					Type = SkillShotType.Linear,
 					Delay = 250,
 					Range = 1100,
-					Radius = 90,
+					Whidth = 90,
 					MissileSpeed = 2000,
 					AddHitbox = true,
 					DamageLvl = Spell.DamageLevel.Medium,
@@ -121,7 +121,7 @@ namespace LX.LX_Evade
 					Type = SkillShotType.Linear,
 					Delay = 250,
 					Range = 950,
-					Radius = 60,
+					Whidth = 60,
 					MissileSpeed = 1600,
 					AddHitbox = true,
 					MissileSpellName = "BardQMissile",
@@ -148,7 +148,7 @@ namespace LX.LX_Evade
 				});
 			#endregion
 
-			#region Blatzcrank
+			#region Blitzcrank
 
 			Spells.Add(
 				new Spell
@@ -186,7 +186,140 @@ namespace LX.LX_Evade
 				});
 			#endregion
 
-			// Ekko W
+			#region Brand
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Brand",
+					SpellName = "BrandBlaze",
+					Slot = SpellSlot.Q,
+					Type = SkillShotType.Linear,
+					Delay = 250,
+					Range = 1100,
+					Whidth = 60,
+					MissileSpeed = 1600,
+					AddHitbox = true,
+					MissileSpellName = "BrandBlazeMissile",
+					DamageLvl = Spell.DamageLevel.High,
+					CCLvl = Spell.CCLevel.Stun,
+					CollisionObj = Spell.CollisionObjects.BasicCollision,
+				});
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Brand",
+					SpellName = "BrandFissure",
+					Slot = SpellSlot.W,
+					Type = SkillShotType.Circular,
+					Delay = 850,
+					Range = 900,
+					Radius = 240,
+					MissileSpeed = int.MaxValue,
+					AddHitbox = true,
+					DamageLvl = Spell.DamageLevel.High,
+					MissileSpellName = "",
+				});
+
+			#endregion
+
+			#region Caitlyn
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Caitlyn",
+					SpellName = "CaitlynPiltoverPeacemaker",
+					Slot = SpellSlot.Q,
+					Type = SkillShotType.Linear,
+					Delay = 625,
+					Range = 1300,
+					Whidth = 90,
+					MissileSpeed = 2200,
+					AddHitbox = true,
+					DamageLvl = Spell.DamageLevel.Medium,
+					CCLvl = Spell.CCLevel.Stun,				
+				});
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Caitlyn",
+					SpellName = "CaitlynEntrapment",
+					Slot = SpellSlot.E,
+					Type = SkillShotType.Linear,
+					Delay = 125,
+					Range = 1000,
+					Whidth = 70,
+					MissileSpeed = 1600,
+					AddHitbox = true,
+					MissileSpellName = "CaitlynEntrapmentMissile",
+					DamageLvl = Spell.DamageLevel.Low,
+					CCLvl = Spell.CCLevel.Slow,
+					CollisionObj = Spell.CollisionObjects.BasicCollision,
+				});
+
+			#endregion Caitlyn
+
+			#region Draven
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Draven",
+					SpellName = "DravenDoubleShot",
+					Slot = SpellSlot.E,
+					Type = SkillShotType.Linear,
+					Delay = 250,
+					Range = 1100,
+					Whidth = 130,
+					MissileSpeed = 1400,
+					AddHitbox = true,
+					MissileSpellName = "DravenDoubleShotMissile",
+					DamageLvl = Spell.DamageLevel.Low,
+					CCLvl = Spell.CCLevel.KnockSideway,
+					CollisionObj = Spell.CollisionObjects.YasuoWall,
+				});
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Draven",
+					SpellName = "DravenRCast",
+					Slot = SpellSlot.R,
+					Type = SkillShotType.Linear,
+					Delay = 400,
+					Range = 20000,
+					Whidth = 160,
+					MissileSpeed = 2000,
+					AddHitbox = true,
+					MissileSpellName = "DravenR",
+					DamageLvl = Spell.DamageLevel.Deadly,
+					CollisionObj = Spell.CollisionObjects.YasuoWall,
+				});
+
+			#endregion Draven
+			
+			#region Ekko
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Ekko",
+					SpellName = "EkkoQ",
+					Slot = SpellSlot.Q,
+					Type = SkillShotType.Linear,
+					Delay = 250,
+					Range = 950,
+					Whidth = 60,
+					MissileSpeed = 1650,
+					AddHitbox = true,
+					MissileSpellName = "ekkoqmis",
+					DamageLvl = Spell.DamageLevel.High,
+					CollisionObj = Spell.CollisionObjects.BasicChampionCollision,
+				});
+
 			Spells.Add(
 				new Spell
 				{
@@ -203,6 +336,8 @@ namespace LX.LX_Evade
 					CCLvl = Spell.CCLevel.Stun,
 					MissileSpellName = "EkkoW",
 				});
+
+			#endregion Ekko
 
 			// Morgana Q
 			Spells.Add(
