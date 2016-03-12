@@ -39,6 +39,7 @@ namespace LX.LX_Activator
 			SummonerList = new List<Summoner>
 			{
 				new Exhoust(),
+				new Heal(),
 				new Ignite(),
 				new Smite(),
 			};

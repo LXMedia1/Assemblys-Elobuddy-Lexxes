@@ -111,6 +111,7 @@
     <Compile Include="LX_Activator\Items\Hunters_Potion.cs" />
     <Compile Include="LX_Activator\Items\Total_Biscuit_of_Rejuvenation.cs" />
     <Compile Include="LX_Activator\Misc.cs" />
+    <Compile Include="LX_Activator\Summoners\Heal.cs" />
     <Compile Include="LX_Activator\Summoners\Exhoust.cs" />
     <Compile Include="LX_Activator\Summoners\Smite.cs" />
     <Compile Include="LX_Activator\Summoners\Ignite.cs" />
