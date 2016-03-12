@@ -49,7 +49,48 @@ namespace LX.LX_Evade
 				   CollisionObj = Spell.CollisionObjects.BasicCollision,
 				   MissileSpellName = "AhriSeduceMissile",
 			   });
-			// Ashe R
+
+			#region Amumu
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Amumu",
+					SpellName = "BandageToss",
+					Slot = SpellSlot.Q,
+					Type = SkillShotType.Linear,
+					Delay = 250,
+					Range = 1100,
+					Radius = 90,
+					MissileSpeed = 2000,
+					AddHitbox = true,
+					DamageLvl = Spell.DamageLevel.Medium,
+					CCLvl = Spell.CCLevel.Stun,
+					MissileSpellName = "SadMummyBandageToss",
+					CollisionObj = Spell.CollisionObjects.BasicCollision,
+				});
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Amumu",
+					SpellName = "CurseoftheSadMummy",
+					Slot = SpellSlot.R,
+					Type = SkillShotType.Circular,
+					Delay = 250,
+					Range = 0,
+					Radius = 550,
+					DamageLvl = Spell.DamageLevel.Deadly,
+					CCLvl = Spell.CCLevel.Stun,
+					MissileSpeed = int.MaxValue,
+					AddHitbox = false,
+					MissileSpellName = "",
+				});
+
+			#endregion
+
+			#region Ashe
+
 			Spells.Add(
 				new Spell
 				{
@@ -67,8 +108,48 @@ namespace LX.LX_Evade
 					MissileSpellName = "EnchantedCrystalArrow",
 					CollisionObj = Spell.CollisionObjects.Enemy_Champions,
 				});
+			#endregion
 
-			// Blitzcrank Q
+			#region Bard
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Bard",
+					SpellName = "BardQ",
+					Slot = SpellSlot.Q,
+					Type = SkillShotType.Linear,
+					Delay = 250,
+					Range = 950,
+					Radius = 60,
+					MissileSpeed = 1600,
+					AddHitbox = true,
+					MissileSpellName = "BardQMissile",
+					CollisionObj = Spell.CollisionObjects.BasicCollision_allow1,
+					DamageLvl = Spell.DamageLevel.Low,
+					CCLvl = Spell.CCLevel.Stun,
+				});
+			
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Bard",
+					SpellName = "BardR",
+					Slot = SpellSlot.R,
+					Type = SkillShotType.Circular,
+					Delay = 500,
+					Range = 3400,
+					Radius = 350,
+					MissileSpeed = 2100,
+					AddHitbox = true,
+					MissileSpellName = "BardR",
+					DamageLvl = Spell.DamageLevel.None,
+					CCLvl = Spell.CCLevel.Stun,
+				});
+			#endregion
+
+			#region Blatzcrank
+
 			Spells.Add(
 				new Spell
 				{
@@ -86,6 +167,24 @@ namespace LX.LX_Evade
 					MissileSpellName = "RocketGrabMissile",
 					CollisionObj = Spell.CollisionObjects.BasicCollision,
 				});
+
+			Spells.Add(
+				new Spell
+				{
+					ChampionName = "Blitzcrank",
+					SpellName = "StaticField",
+					Slot = SpellSlot.R,
+					Type = SkillShotType.Circular,
+					Delay = 250,
+					Range = 0,
+					Radius = 600,
+					MissileSpeed = int.MaxValue,
+					AddHitbox = false,
+					DamageLvl = Spell.DamageLevel.High,
+					EffectLvl = Spell.EffectLevel.Silence,
+					MissileSpellName = "",
+				});
+			#endregion
 
 			// Ekko W
 			Spells.Add(

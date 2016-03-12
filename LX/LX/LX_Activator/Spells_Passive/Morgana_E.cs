@@ -47,7 +47,7 @@ namespace LX.LX_Activator.Spells_Passive
 
 		private void SpellWillHit(LX_Evade.Spell spell, Obj_AI_Base target)
 		{
-			if (Spell.IsReady() && Menu["active_passive"].Cast<CheckBox>().CurrentValue && target.IsValidTarget(Spell.Range))
+			if (Spell.IsReady() && Menu["active_passive"].Cast<CheckBox>().CurrentValue && target.IsValidTarget(Spell.Range) && spell.CCLvl != LX_Evade.Spell.CCLevel.None)
 				Spell.Cast(target);
 		}
 

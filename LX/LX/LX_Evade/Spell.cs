@@ -21,13 +21,18 @@ namespace LX.LX_Evade
 		}
 		public enum CCLevel
 		{
-			None = 0,
-			Slow = 1,
-			Snare = 2,
-			Fear = 3,
-			KnockUp = 4,
-			Stun = 5,
+			None,
+			Slow,
+			Snare,
+			Fear,
+			KnockUp,
+			Stun,
 			Taunt,
+		}
+		public enum EffectLevel
+		{
+			None ,
+			Silence,	
 		}
 		public enum CollisionObjects
 		{
@@ -40,6 +45,7 @@ namespace LX.LX_Evade
 			Friendly_Champions,
 			YasuoWall,
 			Wall,
+			BasicCollision_allow1,
 		}
 
 
@@ -58,6 +64,7 @@ namespace LX.LX_Evade
 		public bool AddHitbox = true; // Adding Hitbox ( Morgana W no hitbox for exemple )
 		public DamageLevel DamageLvl = DamageLevel.None;
 		public CCLevel CCLvl = CCLevel.None;
+		public EffectLevel EffectLvl = EffectLevel.None;
 		public CollisionObjects CollisionObj = CollisionObjects.None;
 		public int MissileAccel = 0;
 		public int ExtraDuration = 0;
